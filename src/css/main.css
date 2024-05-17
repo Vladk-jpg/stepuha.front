@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #fff8dc;
+    color: #111;
+    font-family: "Comfortaa", sans-serif;
+    font-weight: 300;
+}
+
+.header {
+    background-color: #47402E;
+    padding: 25px 50px;
+    font-weight: 600;
+    color: #fff8dc;
+}
+
+.footer{
+    margin-top: 100px;
+    margin-left: 10px;
+}
+
+.reg {
+    color: #111;
+    font-family: "Comfortaa", sans-serif;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 100px;
+    padding-bottom: 25px;
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #47402E;
+
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-family: "Comfortaa", sans-serif;
+    font-weight: 300;
+    background-color: #fff8dc;
+}
+
+.form-group button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #89AC76;
+    color: #fff;
+    cursor: pointer;
+}
+
+.form-group button:hover {
+    background-color: #4F7942;
+}
+
+.button-as-text {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: "Comfortaa", sans-serif;
+    cursor: pointer;
+    color: #fff8dc;
+}
+
+.error-text {
+    color: red;
+    font-size: 14px;
+    text-align: center;
+    margin: 25px;
+}
