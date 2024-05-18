@@ -5,24 +5,32 @@ import ProductDetailPage from './pages/ProductDetail';
 import ShoppingCartPage from './pages/ShoppingCartPage';
 import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
-
+import Header from "./components/Header";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentPage: 'login'
+            currentPage: 'login',
+            orders: []
         };
         this.handleRegistrationSuccess = this.handleRegistrationSuccess.bind(this);
         this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
         this.handleNotLogin = this.handleNotLogin.bind(this);
     }
 
+    setOrders = (orders) => {
+        this.setState({ orders });
+    }
+    deleteOrder = (id) => {
+        this.setState({ orders: this.state.orders.filter(order => order.id !== id) });
+    }
+
     handleRegistrationSuccess() {
         this.setState({ currentPage: 'login' });
     }
     handleLoginSuccess(){
-        this.setState({ currentPage: 'register' });
+        this.setState({ currentPage: 'products' });
     }
     handleNotLogin(){
         this.setState({ currentPage: 'register' });
@@ -35,7 +43,7 @@ class App extends React.Component {
             case 'home':
                 return <HomePage />;
             case 'products':
-                return <ProductsPage />;
+                return <ProductsPage setOrders={this.setOrders} orders={this.state.orders}/>;
             case 'productDetail':
                 return <ProductDetailPage />;
             case 'cart':
@@ -53,12 +61,9 @@ class App extends React.Component {
         return (
             <div>
                 {/* Заголовок приложения */}
-                <header className="header">
-                    <h1>stepuha.net - стипухи нет</h1>
-                </header>
-
+                <Header orders={this.state.orders} onDelete={this.deleteOrder} />
                 {/* Основное содержимое приложения */}
-                <main>
+                <main className={'wrapper'}>
                     {this.renderCurrentPage()}
                 </main>
 
