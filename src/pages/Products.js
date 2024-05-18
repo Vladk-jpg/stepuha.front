@@ -1,54 +1,20 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ProductList from '../components/ProductList';
+import ProductDetail from "../components/ProductDetail";
 
 class Products extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            orders:[],
-            products: [
-                {
-                    id: 1,
-                    picture: './img/courseWork.jpg',
-                    name: 'Курсовая работа',
-                    price: '49.43'
-                },
-                {
-                    id: 2,
-                    picture: './img/labWork.jpg',
-                    name: 'Лаба по оаипу',
-                    price: '10.00'
-                },
-                {
-                    id: 3,
-                    picture: './img/labWorkProg.jpg',
-                    name: 'Лаба по проге',
-                    price: '5.00'
-                },
-                {
-                    id: 4,
-                    picture: './img/moon.jpg',
-                    name: 'Луна',
-                    price: '9999.99'
-                },
-                {
-                    id: 5,
-                    picture: './img/tovar.jpg',
-                    name: 'tovar',
-                    price: '0.00'
-                },
-                {
-                    id: 6,
-                    picture: './img/tovar.jpg',
-                    name: 'tovar',
-                    price: '0.00'
-                }
-
-            ],
+            showProductDetails: false,
+            fullProduct: {},
+            orders: [],
+            products: [],
             loading: true,
             error: null
         };
         this.addToOrder = this.addToOrder.bind(this);
+        this.onShowProduct = this.onShowProduct.bind(this);
     }
 
     componentDidMount() {
@@ -57,6 +23,7 @@ class Products extends Component {
 
     fetchProducts = async () => {
         const token = localStorage.getItem('accessToken');
+        console.log(token);
         try {
             const response = await fetch('http://localhost:8080/api/goods/', {
                 method: 'GET',
@@ -70,25 +37,38 @@ class Products extends Component {
                 throw new Error('Network response was not ok');
             }
 
-            const data = await response.json();
-            this.setState({ products: data, loading: false });
+            const result = await response.json();
+            const data = result.data;
+            this.setState({products: data, loading: false});
         } catch (error) {
-            this.setState({ error: error, loading: false });
+            this.setState({error: error, loading: false});
         }
     };
 
     render() {
-        const { products, loading, error } = this.state;
+        const {products, loading, error} = this.state;
 
         if (loading) {
             return <div>Loading...</div>;
         }
 
-        // if (error) {
-        //     return <div>Error: {error.message}</div>;
-        // }
+        if (error) {
+            return <div>Error: {error.message}</div>;
+        }
 
-        return <ProductList products={products} onAdd = {this.addToOrder}/>;
+        return (
+            <div>
+                <ProductList onShowProduct={this.onShowProduct} products={products} onAdd={this.addToOrder}/>
+                {this.state.showProductDetails &&
+                    <ProductDetail product={this.state.fullProduct} onAdd={this.addToOrder}
+                                   onShowProduct={this.onShowProduct}/>}
+            </div>
+        );
+    }
+
+    onShowProduct(product) {
+        this.setState({fullProduct: product})
+        this.setState({showProductDetails: !this.state.showProductDetails});
     }
 
     addToOrder(product) {
@@ -97,7 +77,7 @@ class Products extends Component {
             const isInArray = orders.some(el => el.id === product.id);
             if (!isInArray) {
                 const updatedOrders = [...orders, product];
-                return { orders: updatedOrders };
+                return {orders: updatedOrders};
             }
             return null;
 

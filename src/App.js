@@ -1,8 +1,5 @@
 import React from 'react';
-import HomePage from './pages/Home';
 import ProductsPage from './pages/Products';
-import ProductDetailPage from './pages/ProductDetail';
-import ShoppingCartPage from './pages/ShoppingCartPage';
 import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
 import Header from "./components/Header";
@@ -40,20 +37,14 @@ class App extends React.Component {
         const { currentPage } = this.state;
 
         switch (currentPage) {
-            case 'home':
-                return <HomePage />;
             case 'products':
                 return <ProductsPage setOrders={this.setOrders} orders={this.state.orders}/>;
-            case 'productDetail':
-                return <ProductDetailPage />;
-            case 'cart':
-                return <ShoppingCartPage />;
             case 'login':
                 return <LoginPage onLoginSuccess={this.handleLoginSuccess} onNotLogin={this.handleNotLogin} />;
             case 'register':
                 return <RegistrationPage onRegistrationSuccess={this.handleRegistrationSuccess} />;
             default:
-                return <HomePage />;
+                return <ProductsPage setOrders={this.setOrders} orders={this.state.orders}/>;
         }
     }
 

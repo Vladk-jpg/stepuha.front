@@ -119,6 +119,25 @@ header .shop-cart .cart-item .delete-icon:hover {
     transform: scale(1.5);
 }
 
+header .shop-cart .cart-item .buy-button {
+    color: #47402E;
+    background: #89AC76;
+    border: none;
+    float: right;
+    position: relative;
+    top: -35px;
+    margin-right: 40px;
+    cursor: pointer;
+    width: 60px;
+    height: 40px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+header .shop-cart .cart-item .buy-button:hover {
+    background: #4F7942;
+}
+
 .footer {
     margin-top: 100px;
     margin-left: 10px;
@@ -190,6 +209,28 @@ header .shop-cart .cart-item .delete-icon:hover {
     margin: 25px;
 }
 
+.product-details {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    overflow: auto;
+
+}
+
+.product-details > div{
+    width: 600px;
+    position: relative;
+    margin: 10% auto;
+    padding: 30px 30px;
+    background: #47402E;
+    border-radius: 10px;
+
+}
+
 .product-list {
     display: flex;
     width: 100%;
@@ -201,33 +242,42 @@ header .shop-cart .cart-item .delete-icon:hover {
     width: 30%;
     margin-bottom: 50px;
     background: #47402E;
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px;
     border: 2px solid #47402E;
     position: relative;
     padding-bottom: 20px;
 }
 
-.product-item img {
+.product-item img, .product-details img {
     width: 100%;
     height: 80%;
     border-radius: 10px 10px 0 0;
     transition: transform 300ms ease;
+    cursor: pointer;
+}
+
+.product-details img {
+    width: 100%;
+    height: 80%;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
 }
 
 .product-item img:hover {
     transform: scale(1.05);
 }
 
-.product-item h2, .product-item p {
+.product-item h2, .product-item p, .product-details h2, .product-details p, .product-details b {
     margin: 10px 20px;
     color: #BBBBBB;
 }
 
-.product-item p {
+.product-item p, .product-details p {
     color: #5fa36a;
 }
 
-.add-to-cart {
+.product-item .add-to-cart,
+.product-details .add-to-cart {
     position: absolute;
     right: 20px;
     bottom: 20px;
@@ -243,7 +293,8 @@ header .shop-cart .cart-item .delete-icon:hover {
     transition: transform 300ms ease;
 }
 
-.add-to-cart:hover {
+.product-item .add-to-cart:hover,
+.product-details .add-to-cart:hover {
     transform: scale(1.5) translateY(-5px);
     background: #4F7942;
 }
