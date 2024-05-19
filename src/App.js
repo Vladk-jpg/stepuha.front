@@ -3,6 +3,7 @@ import ProductsPage from './pages/Products';
 import LoginPage from './pages/LoginPage';
 import RegistrationPage from './pages/RegistrationPage';
 import Header from "./components/Header";
+import ProfilePage from "./pages/ProfilePage";
 
 class App extends React.Component {
     constructor(props) {
@@ -14,6 +15,7 @@ class App extends React.Component {
         this.handleRegistrationSuccess = this.handleRegistrationSuccess.bind(this);
         this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
         this.handleNotLogin = this.handleNotLogin.bind(this);
+        this.handlePage = this.handlePage.bind(this);
     }
 
     setOrders = (orders) => {
@@ -32,6 +34,13 @@ class App extends React.Component {
     handleNotLogin(){
         this.setState({ currentPage: 'register' });
     }
+    handlePage(page){
+        this.setState({currentPage: page})
+        if(page === 'login'){
+            this.setState({orders: []});
+            localStorage.removeItem('accessToken');
+        }
+    }
 
     renderCurrentPage() {
         const { currentPage } = this.state;
@@ -43,6 +52,8 @@ class App extends React.Component {
                 return <LoginPage onLoginSuccess={this.handleLoginSuccess} onNotLogin={this.handleNotLogin} />;
             case 'register':
                 return <RegistrationPage onRegistrationSuccess={this.handleRegistrationSuccess} />;
+            case 'profile':
+                return <ProfilePage onDeleteOrder={this.deleteOrder}/>
             default:
                 return <ProductsPage setOrders={this.setOrders} orders={this.state.orders}/>;
         }
@@ -52,7 +63,7 @@ class App extends React.Component {
         return (
             <div>
                 {/* Заголовок приложения */}
-                <Header orders={this.state.orders} onDelete={this.deleteOrder} />
+                <Header orders={this.state.orders} onDelete={this.deleteOrder} onPage={this.handlePage} />
                 {/* Основное содержимое приложения */}
                 <main className={'wrapper'}>
                     {this.renderCurrentPage()}

@@ -34,7 +34,7 @@ class Products extends Component {
             });
 
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error('Чтобы увидеть товары, пожалуйста войдите в систему');
             }
 
             const result = await response.json();
@@ -72,17 +72,17 @@ class Products extends Component {
     }
 
     addToOrder(product) {
-        this.setState((prevState, props) => {
-            const orders = [...props.orders];
-            const isInArray = orders.some(el => el.id === product.id);
+        this.setState((prevState) => {
+            const isInArray = prevState.orders.some(el => el.id === product.id);
             if (!isInArray) {
-                const updatedOrders = [...orders, product];
-                return {orders: updatedOrders};
+                const updatedOrders = [...prevState.orders, product];
+                return { orders: updatedOrders };
             }
             return null;
-
         }, () => {
-            this.props.setOrders(this.state.orders);
+            if (this.props.setOrders) {
+                this.props.setOrders(this.state.orders);
+            }
         });
     }
 

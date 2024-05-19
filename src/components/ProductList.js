@@ -3,6 +3,11 @@ import React, {Component} from 'react';
 class ProductList extends Component {
     render() {
         const {products} = this.props;
+
+        if (!Array.isArray(products)) {
+            return <div>Нет товаров</div>;
+        }
+
         return (
             <div className="product-list">
                 {products.map(product => (

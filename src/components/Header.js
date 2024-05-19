@@ -25,9 +25,9 @@ export default function Header(props) {
             <div>
                 <span className={'logo'}>Stepuha.net - стипухи нет</span>
                 <ul className={"nav"}>
-                    <li>Главная</li>
-                    <li>Кабинет</li>
-                    <li>Авторизация</li>
+                    <li onClick={() => props.onPage('products')}>Главная</li>
+                    <li onClick={() => props.onPage('profile')}>Кабинет</li>
+                    <li onClick={() => props.onPage('login')}>Выйти</li>
                 </ul>
                 <button onClick={() => setCartOpen(cartOpen = !cartOpen)}
                         className={`shop-cart-button ${cartOpen && 'active'}`}>
