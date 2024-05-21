@@ -378,7 +378,7 @@ header .shop-cart .cart-item .buy-button:hover {
     transform: scale(1.2);
 }
 
-.edit-product-form {
+.edit-product-form, .edit-user-form {
     position: fixed;
     top: 0;
     left: 0;
@@ -390,7 +390,7 @@ header .shop-cart .cart-item .buy-button:hover {
     margin: 0 auto;
 }
 
-.edit-product-form > form {
+.edit-product-form > form, .edit-user-form > form {
     width: 600px;
     position: relative;
     margin: 10% auto;
@@ -399,7 +399,7 @@ header .shop-cart .cart-item .buy-button:hover {
     border-radius: 10px;
 }
 
-.edit-product-form button{
+.edit-product-form button, .edit-user-form button {
     padding: 10px;
     border: none;
     border-radius: 5px;
@@ -411,7 +411,7 @@ header .shop-cart .cart-item .buy-button:hover {
     font-weight: 300;
 }
 
-.edit-product-form button:hover{
+.edit-product-form button:hover, .edit-user-form button:hover {
     background-color: #4F7942;
 }
 
@@ -469,4 +469,32 @@ header .shop-cart .cart-item .buy-button:hover {
 
 .add-form-button:hover {
     background-color: #4F7942;
+}
+
+.load-image-form {
+    position: relative;
+    background: #47402E;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.load-image-form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #89AC76;
+    color: #fff;
+    cursor: pointer;
+    margin-right: 20px;
+    font-family: "Comfortaa", sans-serif;
+    font-weight: 300;
+}
+
+.load-image-form button:hover {
+    background-color: #4F7942;
+}
+
+.load-image-form input {
+    font-family: "Comfortaa", sans-serif;
+    color: #fff8dc;
 }

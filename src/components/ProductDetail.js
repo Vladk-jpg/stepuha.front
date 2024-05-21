@@ -5,7 +5,8 @@ export class ProductDetail extends Component {
         return (
             <div className='product-details'>
                 <div>
-                    <img src={this.props.product.picture} alt={this.props.product.name}
+                    <img src={"http://localhost:8080/img/" + this.props.product.id + "/" + this.props.product.picture}
+                         alt={this.props.product.name}
                          onClick={() => this.props.onShowProduct(this.props.product)}/>
                     <h2>{this.props.product.name}</h2>
                     <b>{this.props.product.description}</b>
