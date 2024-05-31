@@ -5,7 +5,7 @@ export class Order extends Component{
     render() {
         return(
             <div className="cart-item">
-                <img src={this.props.product.picture} alt={this.props.product.name}/>
+                <img src={"http://localhost:8080/img/" + this.props.product.id + "/" + this.props.product.picture} alt={this.props.product.name}/>
                 <h2>{this.props.product.name}</h2>
                 <p>{this.props.product.price} руб.</p>
                 <HiTrash className="delete-icon" onClick={() => this.props.onDelete(this.props.product.id)}/>

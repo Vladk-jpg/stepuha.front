@@ -37,7 +37,7 @@ class UploadImage extends Component {
             const response = await fetch(`http://localhost:8080/api/goods/picture/${id}`, {
                 method: 'PUT',
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Добавляем токен в заголовок
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: formData,
             });
@@ -48,6 +48,7 @@ class UploadImage extends Component {
 
             const result = await response.json();
             console.log('Upload successful', result);
+
         } catch (error) {
             console.error('Ошибка при загрузке изображения:', error);
             this.setState({ error: error.message });

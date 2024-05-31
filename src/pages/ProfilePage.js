@@ -3,6 +3,7 @@ import MyProductList from "../components/MyProductsList";
 import EditProductForm from "../components/EditProductForm";
 import AddProductForm from "../components/AddProductForm";
 import EditUserForm from "../components/EditUserForm";
+import products from "./Products";
 
 class ProfilePage extends Component {
     constructor(props) {
@@ -48,6 +49,7 @@ class ProfilePage extends Component {
                 teacher: userData.teacher,
                 loading: false,
             });
+            console.log(userData)
         } catch (error) {
             this.setState({error: error.message, loading: false});
         }
@@ -170,12 +172,7 @@ class ProfilePage extends Component {
             const result = await response.json();
             console.log(result.data);
 
-            this.fetchProducts();
-            this.setState((prevState) => ({
-                products: prevState.products.map(product =>
-                    product.id === updatedProduct.id ? result : product
-                )
-            }));
+            await this.fetchProducts()
         } catch (error) {
             console.error("There was a problem with the PUT request:", error);
         }
@@ -184,6 +181,10 @@ class ProfilePage extends Component {
     onAdd = async (newProduct) => {
         const token = localStorage.getItem('accessToken');
         const url = 'http://localhost:8080/api/goods/';
+        console.log(newProduct);
+        const picture = newProduct.picture;
+        console.log(picture);
+        newProduct.picture = '';
 
         try {
             const response = await fetch(url, {
@@ -199,11 +200,36 @@ class ProfilePage extends Component {
                 throw new Error('Network response was not ok');
             }
 
-            this.fetchProducts();
+            await this.fetchProducts();
+
+            setTimeout(async () => {
+                const formData = new FormData();
+                formData.append('picture', picture);
+
+                const lastProduct = this.state.products[this.state.products.length - 1];
+                if (lastProduct) {
+                    const responsePic = await fetch(`http://localhost:8080/api/goods/picture/${lastProduct.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        },
+                        body: formData
+                    });
+
+                    if (!responsePic.ok) {
+                        throw new Error('Failed to upload image');
+                    }
+
+                    await this.fetchProducts();
+                }
+            }, 100);
+
         } catch (error) {
             console.error('There was a problem with the POST request:', error);
         }
     };
+
+
 
     render() {
         const {products, loading, error, editingProduct, editingUser, username, name, surname, teacher} = this.state;

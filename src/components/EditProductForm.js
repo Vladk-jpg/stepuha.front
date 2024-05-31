@@ -12,20 +12,23 @@ class EditProductForm extends Component {
 
     handleChange = (e) => {
         const {name, value} = e.target;
-        this.setState({[name]: value});
-    };
+        this.setState({[name]: value})
+    }
 
     handleSubmit = (e) => {
-        e.preventDefault();
+        e.preventDefault()
         const updatedProduct = {
             ...this.state,
-            price: parseFloat(this.state.price)
+            price: parseFloat(this.state.price),
         };
-        this.props.onUpdate(updatedProduct);
-    };
+        delete updatedProduct['picture']
+        this.props.onUpdate(updatedProduct)
+    }
+
+
 
     render() {
-        const {onCancel} = this.props;
+        const {onCancel} = this.props
 
         return (
             <div className="edit-product-form">
@@ -45,13 +48,15 @@ class EditProductForm extends Component {
                         />
                         <label>Price</label>
                         <input
-                            type="text"
+                            type="number"
+                            min="1"
+                            max="999999"
                             name="price"
                             onChange={this.handleChange}
                         />
                     </div>
                     <div>
-                        <UploadImage id={this.props.product.id}/>
+                        <UploadImage id={this.props.product.id} product={this.props.product} />
                     </div>
                     <button type="submit">Сохранить</button>
                     <button type="button" onClick={onCancel}>

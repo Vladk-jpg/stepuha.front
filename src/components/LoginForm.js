@@ -31,11 +31,15 @@ class LoginForm extends Component {
 
         if (response.ok) {
             const data = await response.json();
-            this.setState({accessToken: data.token, error: ''});
-            localStorage.setItem('accessToken', data.token);
-            this.props.onLoginSuccess();
+            if(data.message){
+                this.setState({error: 'Неверный логин или пароль'})
+            } else {
+                this.setState({accessToken: data.token, error: ''})
+                localStorage.setItem('accessToken', data.token)
+                this.props.onLoginSuccess()
+            }
         } else {
-            this.setState({error: 'Неверный логин или пароль'});
+            this.setState({error: 'Неверный логин или пароль'})
         }
     };
 

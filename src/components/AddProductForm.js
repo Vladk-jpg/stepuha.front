@@ -6,20 +6,24 @@ class AddProductForm extends Component {
         this.state = {
             name: '',
             price: '',
-            picture: '',
+            picture: null,
             description: ''
         };
     }
 
     handleChange = (event) => {
-        this.setState({ [event.target.name]: event.target.value });
+        const { name, value, files } = event.target;
+        if (name === "picture") {
+            this.setState({ picture: files[0] });
+        } else {
+            this.setState({ [name]: value });
+        }
     }
 
     handleSubmit = (event) => {
         event.preventDefault();
         const { name, price, picture, description } = this.state;
 
-        // Преобразование цены в число
         const product = {
             name,
             price: parseFloat(price),
@@ -28,11 +32,11 @@ class AddProductForm extends Component {
         };
 
         this.props.onAdd(product);
-        this.setState({ name: '', price: '', picture: '', description: '' }); // Очистка полей после отправки
+        this.setState({ name: '', price: '', picture: null, description: '' });
     }
 
     render() {
-        const { name, price, picture, description } = this.state;
+        const { name, price, description } = this.state;
         return (
             <form className="add-form-container" onSubmit={this.handleSubmit}>
                 <h2 className="add-form-title">Добавить новый товар</h2>
@@ -47,6 +51,8 @@ class AddProductForm extends Component {
                 />
                 <input
                     type="number"
+                    min="1"
+                    max="999999"
                     name="price"
                     value={price}
                     onChange={this.handleChange}
@@ -55,11 +61,9 @@ class AddProductForm extends Component {
                     required
                 />
                 <input
-                    type="text"
+                    type="file"
                     name="picture"
-                    value={picture}
                     onChange={this.handleChange}
-                    placeholder="URL изображения"
                     className="add-form-input"
                     required
                 />

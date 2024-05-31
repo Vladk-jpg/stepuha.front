@@ -25,7 +25,7 @@ class Products extends Component {
         const token = localStorage.getItem('accessToken');
         console.log(token);
         try {
-            const response = await fetch('http://localhost:8080/api/goods/', {
+            const response = await fetch('http://localhost:8080/api/supp/rnd', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`,

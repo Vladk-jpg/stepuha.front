@@ -7,11 +7,11 @@ import ProfilePage from "./pages/ProfilePage";
 
 class App extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             currentPage: 'login',
             orders: []
-        };
+        }
         this.handleRegistrationSuccess = this.handleRegistrationSuccess.bind(this);
         this.handleLoginSuccess = this.handleLoginSuccess.bind(this);
         this.handleNotLogin = this.handleNotLogin.bind(this);
@@ -62,14 +62,11 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                {/* Заголовок приложения */}
                 <Header orders={this.state.orders} onDelete={this.deleteOrder} onPage={this.handlePage} />
-                {/* Основное содержимое приложения */}
                 <main className={'wrapper'}>
                     {this.renderCurrentPage()}
                 </main>
 
-                {/* Подвал приложения */}
                 <footer className={"footer"}>
                     <p>&copy; Stepuha.net</p>
                 </footer>
