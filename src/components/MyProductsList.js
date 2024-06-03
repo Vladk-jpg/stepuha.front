@@ -16,7 +16,7 @@ class MyProductList extends Component {
                         <img src={`http://localhost:8080/img/${product.id}/${product.picture}`} alt={product.name} />
                         <h2>{product.name}</h2>
                         <b>{product.description}</b>
-                        <p>{product.price} руб.</p>
+                        <p>{product.price} @</p>
                         <FaEdit className="edit-my-good" onClick={() => showEditForm(product)}/>
                         <HiTrash className='delete-my-good' onClick={() => onDelete(product.id)}/>
                     </div>

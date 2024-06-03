@@ -3,7 +3,7 @@ import MyProductList from "../components/MyProductsList";
 import EditProductForm from "../components/EditProductForm";
 import AddProductForm from "../components/AddProductForm";
 import EditUserForm from "../components/EditUserForm";
-import products from "./Products";
+import TransferMoneyForm from '../components/TransferMoneyForm';
 
 class ProfilePage extends Component {
     constructor(props) {
@@ -13,6 +13,7 @@ class ProfilePage extends Component {
             name: 'Name',
             surname: 'Surname',
             teacher: 'Teacher',
+            money: 0,
             products: [],
             loading: true,
             error: null,
@@ -47,6 +48,7 @@ class ProfilePage extends Component {
                 name: userData.name,
                 surname: userData.surname,
                 teacher: userData.teacher,
+                money: userData.money,
                 loading: false,
             });
             console.log(userData)
@@ -217,12 +219,12 @@ class ProfilePage extends Component {
                     });
 
                     if (!responsePic.ok) {
-                        throw new Error('Failed to upload image');
+                        console.log('Failed to upload image');
                     }
 
                     await this.fetchProducts();
                 }
-            }, 100);
+            }, 500);
 
         } catch (error) {
             console.error('There was a problem with the POST request:', error);
@@ -247,6 +249,7 @@ class ProfilePage extends Component {
                 <div className='info-container'>
                     <h1>Общая информация:</h1>
                     <div className='info-item'>
+                        <p>БАЛАНС: {this.state.money} @</p>
                         <p>Никнейм: {this.state.username}</p>
                         <p>Имя: {this.state.name}</p>
                         <p>Фамилия: {this.state.surname}</p>
@@ -254,6 +257,7 @@ class ProfilePage extends Component {
                         <button className="change-button" onClick={this.showEditUserForm}>Изменить профиль</button>
                     </div>
                 </div>
+                <TransferMoneyForm onReload={this.fetchUserData}/>
                 <MyProductList products={products}
                                onDelete={this.onDelete}
                                onUpdate={this.onUpdate}

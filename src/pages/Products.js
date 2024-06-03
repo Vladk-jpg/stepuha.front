@@ -72,6 +72,7 @@ class Products extends Component {
     }
 
     addToOrder(product) {
+        this.setState({orders: this.props.orders})
         this.setState((prevState) => {
             const isInArray = prevState.orders.some(el => el.id === product.id);
             if (!isInArray) {

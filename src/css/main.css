@@ -444,6 +444,8 @@ header .shop-cart .cart-item .buy-button:hover {
     background: #fff8dc;
     border-radius: 5px;
     transition: border-color 0.2s ease-in-out;
+    font-family: "Comfortaa", sans-serif;
+    font-weight: 300;
 }
 
 .add-form-input:focus,
@@ -455,6 +457,8 @@ header .shop-cart .cart-item .buy-button:hover {
 .add-form-textarea {
     height: 100px;
     resize: vertical;
+    font-family: "Comfortaa", sans-serif;
+    font-weight: 300;
 }
 
 .add-form-button {
@@ -467,10 +471,19 @@ header .shop-cart .cart-item .buy-button:hover {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
+    font-family: "Comfortaa", sans-serif;
+    font-weight: 300;
 }
 
 .add-form-button:hover {
     background-color: #4F7942;
+}
+
+.add-form-p {
+    margin-top: 10px;
+    color: #BBBBBB;
+    font-family: "Comfortaa", sans-serif;
+    font-weight: 300;
 }
 
 .load-image-form {

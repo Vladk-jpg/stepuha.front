@@ -1,45 +1,80 @@
-import React, {useState} from 'react';
-import Order from "./Order";
+import React, { Component } from 'react';
+import Order from './Order';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
 
-const showOrders = (props) => {
-    return(<div>
-        {props.orders.map(el => (
-            <Order onDelete={props.onDelete} key={el.id} product={el} />
-        ))}
-    </div>)
-}
+class Header extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            cartOpen: false
+        };
+    }
 
-const showNothing = () => {
-    return(
-        <div className="empty">
-            <h2>Товаров нет</h2>
-        </div>
-    )
-}
+    toggleCart = () => {
+        this.setState(prevState => ({ cartOpen: !prevState.cartOpen }));
+    }
 
-export default function Header(props) {
-    let [cartOpen, setCartOpen] = useState(false)
-
-    return (
-        <header>
+    showOrders = () => {
+        return (
             <div>
-                <span className={'logo'}>Stepuha.net - стипухи нет</span>
-                <ul className={"nav"}>
-                    <li onClick={() => props.onPage('products')}>Главная</li>
-                    <li onClick={() => props.onPage('profile')}>Кабинет</li>
-                    <li onClick={() => props.onPage('login')}>Выйти</li>
-                </ul>
-                <button onClick={() => setCartOpen(cartOpen = !cartOpen)}
-                        className={`shop-cart-button ${cartOpen && 'active'}`}>
-                    Корзина
-                </button>
-                {cartOpen && (
-                    <div className={"shop-cart"}>
-                        {props.orders.length > 0 ?
-                            showOrders(props) : showNothing()}
-                    </div>
-                )}
+                {this.props.orders.map(el => (
+                    <Order
+                        onDelete={this.props.onDelete}
+                        key={el.id}
+                        product={el}
+                        showMessage={this.showMessage}
+                        purchaseDone={this.purchaseDone}
+                    />
+                ))}
             </div>
-        </header>
-    )
+        );
+    }
+
+    showNothing = () => {
+        return (
+            <div className="empty">
+                <h2>Товаров нет</h2>
+            </div>
+        );
+    }
+
+    showMessage = (message, type) => {
+        if (type === 'error') {
+            toast.error(message);
+        } else if (type === 'success') {
+            toast.success(message);
+        }
+    }
+
+    purchaseDone = () => {
+        this.props.onPage('profile')
+    }
+
+    render() {
+        return (
+            <header>
+                <div>
+                    <span className={'logo'}>Stepuha.net - стипухи нет</span>
+                    <ul className={'nav'}>
+                        <li onClick={() => this.props.onPage('products')}>Главная</li>
+                        <li onClick={() => this.props.onPage('profile')}>Кабинет</li>
+                        <li onClick={() => this.props.onPage('login')}>Выйти</li>
+                    </ul>
+                    <button onClick={this.toggleCart}
+                            className={`shop-cart-button ${this.state.cartOpen ? 'active' : ''}`}>
+                        Корзина
+                    </button>
+                    {this.state.cartOpen && (
+                        <div className={'shop-cart'}>
+                            {this.props.orders.length > 0 ? this.showOrders() : this.showNothing()}
+                        </div>
+                    )}
+                    <ToastContainer />
+                </div>
+            </header>
+        );
+    }
 }
+
+export default Header;
