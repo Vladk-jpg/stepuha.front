@@ -13,12 +13,15 @@ class ProfilePage extends Component {
             name: 'Name',
             surname: 'Surname',
             teacher: 'Teacher',
+            is_moderator: false,
+            id: null,
             money: 0,
             products: [],
             loading: true,
             error: null,
             editingProduct: null,
             editingUser: false,
+            picture: null
         };
     }
 
@@ -49,9 +52,11 @@ class ProfilePage extends Component {
                 surname: userData.surname,
                 teacher: userData.teacher,
                 money: userData.money,
-                loading: false,
+                is_moderator: userData.is_moderator,
+                id: userData.id
             });
             console.log(userData)
+            this.props.setModer(userData.is_moderator)
         } catch (error) {
             this.setState({error: error.message, loading: false});
         }
@@ -180,12 +185,45 @@ class ProfilePage extends Component {
         }
     };
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.products !== this.state.products) {
+            this.uploadPicture();
+        }
+    }
+
+    uploadPicture = async () => {
+        const formData = new FormData();
+        const token = localStorage.getItem('accessToken');
+        formData.append('picture', this.state.picture);
+
+        if(!this.state.picture){
+            return;
+        }
+
+        const lastProduct = this.state.products[this.state.products.length - 1];
+        if (lastProduct) {
+            const responsePic = await fetch(`http://localhost:8080/api/goods/picture/${lastProduct.id}`, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+                body: formData
+            });
+
+            if (!responsePic.ok) {
+                console.log('Failed to upload image');
+            }
+            this.setState({picture: null})
+            await this.fetchProducts();
+        }
+    }
+
     onAdd = async (newProduct) => {
         const token = localStorage.getItem('accessToken');
         const url = 'http://localhost:8080/api/goods/';
         console.log(newProduct);
         const picture = newProduct.picture;
-        console.log(picture);
+        this.setState({picture: picture});
         newProduct.picture = '';
 
         try {
@@ -204,33 +242,10 @@ class ProfilePage extends Component {
 
             await this.fetchProducts();
 
-            setTimeout(async () => {
-                const formData = new FormData();
-                formData.append('picture', picture);
-
-                const lastProduct = this.state.products[this.state.products.length - 1];
-                if (lastProduct) {
-                    const responsePic = await fetch(`http://localhost:8080/api/goods/picture/${lastProduct.id}`, {
-                        method: 'PUT',
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        },
-                        body: formData
-                    });
-
-                    if (!responsePic.ok) {
-                        console.log('Failed to upload image');
-                    }
-
-                    await this.fetchProducts();
-                }
-            }, 500);
-
         } catch (error) {
             console.error('There was a problem with the POST request:', error);
         }
     };
-
 
 
     render() {
@@ -249,6 +264,7 @@ class ProfilePage extends Component {
                 <div className='info-container'>
                     <h1>Общая информация:</h1>
                     <div className='info-item'>
+                        <p>id: {this.state.id}</p>
                         <p>БАЛАНС: {this.state.money} @</p>
                         <p>Никнейм: {this.state.username}</p>
                         <p>Имя: {this.state.name}</p>

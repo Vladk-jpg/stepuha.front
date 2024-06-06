@@ -21,6 +21,10 @@ class Products extends Component {
         this.fetchProducts();
     }
 
+    setProducts = (updatedProducts) => {
+        this.setState({ products: updatedProducts });
+    };
+
     fetchProducts = async () => {
         const token = localStorage.getItem('accessToken');
         console.log(token);
@@ -61,7 +65,8 @@ class Products extends Component {
                 <ProductList onShowProduct={this.onShowProduct} products={products} onAdd={this.addToOrder}/>
                 {this.state.showProductDetails &&
                     <ProductDetail product={this.state.fullProduct} onAdd={this.addToOrder}
-                                   onShowProduct={this.onShowProduct}/>}
+                                   onShowProduct={this.onShowProduct} isModer={this.props.isModer}
+                                   products={products} setProducts={this.setProducts}/>}
             </div>
         );
     }
@@ -77,7 +82,7 @@ class Products extends Component {
             const isInArray = prevState.orders.some(el => el.id === product.id);
             if (!isInArray) {
                 const updatedOrders = [...prevState.orders, product];
-                return { orders: updatedOrders };
+                return {orders: updatedOrders};
             }
             return null;
         }, () => {

@@ -31,7 +31,7 @@ class TransferMoneyForm extends Component {
             });
 
             if (!response.ok) {
-                throw new Error('У вас недостаточно средств');
+                throw new Error('Не удалось выполнить операцию');
             }
 
             const result = await response.json();

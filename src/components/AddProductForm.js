@@ -9,6 +9,7 @@ class AddProductForm extends Component {
             picture: null,
             description: ''
         };
+        this.pictureInputRef = React.createRef();
     }
 
     handleChange = (event) => {
@@ -32,7 +33,9 @@ class AddProductForm extends Component {
         };
 
         this.props.onAdd(product);
+
         this.setState({ name: '', price: '', picture: null, description: '' });
+        this.pictureInputRef.current.value = '';
     }
 
     render() {
@@ -65,6 +68,7 @@ class AddProductForm extends Component {
                     name="picture"
                     onChange={this.handleChange}
                     className="add-form-input"
+                    ref={this.pictureInputRef}
                     required
                 />
                 <textarea

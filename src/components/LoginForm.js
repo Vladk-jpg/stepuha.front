@@ -29,8 +29,8 @@ class LoginForm extends Component {
             })
         });
 
+        const data = await response.json();
         if (response.ok) {
-            const data = await response.json();
             if(data.message){
                 this.setState({error: 'Неверный логин или пароль'})
             } else {
@@ -39,7 +39,11 @@ class LoginForm extends Component {
                 this.props.onLoginSuccess()
             }
         } else {
-            this.setState({error: 'Неверный логин или пароль'})
+            if(data.message === 'user is frozen'){
+                this.setState({error: 'Ваш аккаунт заморожен'})
+            } else{
+                this.setState({error: 'Неверный логин или пароль'})
+            }
         }
     };
 

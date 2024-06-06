@@ -237,6 +237,22 @@ header .shop-cart .cart-item .buy-button:hover {
 
 }
 
+.product-details button {
+    width: 200px;
+    padding: 5px;
+    margin-right: 20px;
+    font-family: "Comfortaa", sans-serif;
+    font-weight: 300;
+    color: #47402E;
+    background: #89AC76;
+    border: none;
+    cursor: pointer;
+}
+
+.product-details button:hover {
+    background: #4F7942;
+}
+
 .product-list {
     display: flex;
     width: 100%;
